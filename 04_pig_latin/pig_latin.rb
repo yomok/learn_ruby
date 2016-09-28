@@ -1,31 +1,23 @@
-#write your code here
 def translate(str)
     vowels = ['a','e','i','o','u']
-    
     words = str.split(" ")
-    
-    result = ""
-    
+    translated = []
     words.each do |word|
-        counter = 0
         if(vowels.include? word[0])
-            counter += 0
+            translated << word + "ay"
         elsif word[0,2] == "qu"
-            counter += 2
+            translated << word[2..word.length-1] + word[0,2] + "ay"
+        elsif (word[1] == "q")
+            translated << word[3..word.length-1] + word[0,3] + "ay"
         else
-            if(vowels.include? word[1])
-                counter += 1
-            elsif(vowels.include? word[2])
-                if(word[1,2] == "qu")
-                    counter += 1
-                end
-                counter += 2
-            else
-                counter += 3
+            pre = ""
+            while(!vowels.include? word[0])
+                pre = pre + word[0]
+                word = word[1..word.length-1]
             end
+            word = word + pre + "ay"
+            translated << word
         end
-        
-        result = [result, word[counter, word.length] + word[0, counter] + "ay"].join(' ').strip
-    end
-    result
+    end 
+    return translated.join(" ")
 end
